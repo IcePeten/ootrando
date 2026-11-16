@@ -162,8 +162,8 @@ a.primary.button { width: auto; display: inline-block; margin: 0; padding: 10px 
 .credits-list li { font-size: 15px; line-height: 1.6; padding: 7px 0; border-bottom: 1px dotted var(--rule); }
 .credits-list li:last-child { border-bottom: none; }
 
-footer { color: var(--muted); font-size: 13.5px; padding: 18px 24px 34px; border-top: 1px solid var(--rule); margin: 0 40px; }
-footer p { margin: 4px auto; max-width: 640px; line-height: 1.5; }
+footer { color: var(--muted); font-size: 13px; padding: 18px 0 34px; border-top: 1px solid var(--rule); margin: 0 40px; }
+footer p { margin: 3px auto; line-height: 1.5; text-wrap: balance; }
 
 .lightbox { position: fixed; inset: 0; z-index: 80; background: rgba(28, 23, 16, .94); display: flex; align-items: center; justify-content: center; padding: 28px 84px; }
 .lb-stage { margin: 0; max-width: min(1180px, 100%); display: flex; flex-direction: column; align-items: center; }
