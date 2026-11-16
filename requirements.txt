@@ -1,0 +1,8 @@
+evfl==1.3.0
+zstandard
+mmh3
+numpy
+pillow
+etcpak
+texture2ddecoder
+pywebview

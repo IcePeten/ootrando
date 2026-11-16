@@ -1,0 +1,582 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OoT Studio</title>
+<style>
+  :root {
+    --bg: #0d1411;
+    --panel: #141e1a;
+    --panel-2: #1a2621;
+    --line: #26362f;
+    --text: #e7ece9;
+    --muted: #8fa39a;
+    --gold: #d8b25c;
+    --gold-2: #f0d48a;
+    --green: #3fa66b;
+    --red: #d36060;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: "Segoe UI", system-ui, sans-serif; }
+  body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #1b2a22 0%, var(--bg) 60%);
+    display: flex; justify-content: center;
+  }
+  main { width: 100%; max-width: 640px; padding: 36px 24px 48px; text-align: center; }
+  header { margin-bottom: 28px; }
+  .crest { width: 54px; height: 47px; margin: 0 auto 12px; display: block; }
+  h1 {
+    margin: 0; font-family: "Palatino Linotype", Georgia, serif; font-weight: 600;
+    font-size: 34px; letter-spacing: 3px; color: var(--gold-2);
+  }
+  .subtitle { margin-top: 6px; color: var(--muted); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+  section {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px 22px; margin-bottom: 16px;
+  }
+  h2 {
+    margin: 0 0 14px; font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .seed-row { display: flex; gap: 10px; justify-content: center; }
+  input[type=text] {
+    flex: 1; max-width: 360px; background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    border-radius: 10px; padding: 11px 14px; font-size: 16px; text-align: center; outline: none;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type=text]:focus { border-color: var(--gold); }
+  .hint { color: var(--muted); font-size: 12.5px; margin-top: 10px; line-height: 1.5; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--panel-2); color: var(--text); padding: 10px 16px; transition: .15s;
+  }
+  button:hover { border-color: var(--gold); color: var(--gold-2); }
+  .levels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .level {
+    padding: 14px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel-2);
+    cursor: pointer; transition: .15s;
+  }
+  .level .name { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .level .desc { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+  .level.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+  .levels.traps { grid-template-columns: 1fr 1fr 1fr; }
+  .level.active .name { color: var(--gold-2); }
+  .toggles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .toggle {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 10px;
+    border-radius: 12px; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; user-select: none;
+  }
+  .toggle .label { font-size: 14px; font-weight: 500; }
+  .toggle .sub { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+  .switch { width: 40px; height: 22px; border-radius: 11px; background: #33443c; position: relative; transition: .15s; }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+    background: #cfd8d3; transition: .15s;
+  }
+  .toggle.on .switch { background: var(--green); }
+  .toggle.on .switch::after { left: 21px; background: #fff; }
+  .toggle.wide { grid-column: span 2; }
+  #generate {
+    width: 100%; padding: 16px; font-size: 17px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    background: linear-gradient(180deg, #e2bf6c, #b8913c); color: #1a1406; border: none; margin: 4px 0 16px;
+  }
+  #generate:hover { filter: brightness(1.08); color: #1a1406; }
+  #generate:disabled { filter: grayscale(.6) brightness(.7); cursor: wait; }
+  .status { min-height: 20px; color: var(--muted); font-size: 13.5px; margin-bottom: 16px; }
+  .status.error { color: var(--red); }
+  .spinner {
+    display: inline-block; width: 13px; height: 13px; border: 2px solid var(--muted); border-top-color: var(--gold);
+    border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -2px; margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #result { display: none; }
+  .seed-big { font-family: "Palatino Linotype", Georgia, serif; font-size: 28px; color: var(--gold-2); letter-spacing: 1px; }
+  .stats { display: flex; justify-content: center; gap: 28px; margin: 16px 0 18px; }
+  .stat .n { font-size: 22px; font-weight: 600; }
+  .stat .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  #rounds { display: none; margin-top: 18px; text-align: center; }
+  .round { margin-bottom: 12px; }
+  .round .title { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .round .entry { font-size: 13px; line-height: 1.7; }
+  .round .entry b { font-weight: 600; }
+  .round .entry span { color: var(--muted); }
+  .installed-list { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .mod { display: flex; align-items: center; gap: 14px; }
+  .mod .name { font-size: 14px; }
+  .mod button { padding: 6px 12px; font-size: 12.5px; }
+  .mod button.danger:hover { border-color: var(--red); color: var(--red); }
+  .empty { color: var(--muted); font-size: 13px; }
+  footer { color: var(--muted); font-size: 11.5px; margin-top: 22px; line-height: 1.6; }
+  .colors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .color {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 10px;
+    border-radius: 12px; border: 1px solid var(--line); background: var(--panel-2);
+  }
+  .color .label { font-size: 14px; font-weight: 500; }
+  .color .row { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .swatch { width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--line); flex: none; }
+  select {
+    background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px;
+    padding: 7px 8px; font: inherit; font-size: 13px; text-align: center; outline: none; max-width: 190px;
+  }
+  select:focus { border-color: var(--gold); }
+  input[type=color] { width: 30px; height: 26px; border: none; background: none; padding: 0; cursor: pointer; }
+  .tk-top { display: flex; gap: 14px; justify-content: center; align-items: center; margin-bottom: 12px; }
+  .tk-top select { max-width: 320px; font-size: 14px; padding: 9px 10px; }
+  .tk-total { color: var(--muted); font-size: 13px; }
+  .tk-filters { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .chip {
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2);
+    font-size: 12.5px; cursor: pointer; user-select: none;
+  }
+  .chip.on { border-color: var(--gold); color: var(--gold-2); }
+  #tk-map { width: 100%; background: #0f1815; border: 1px solid var(--line); border-radius: 12px; display: block; }
+  #tk-map .dot { cursor: pointer; stroke: #1a1208; stroke-width: 3; }
+  #tk-map .dot.done { opacity: .25; }
+  #tk-map .dot.major { stroke: #fff; stroke-width: 4; }
+  #tk-map .strip-label { fill: #8fa39a; font-size: 22px; text-anchor: middle; letter-spacing: 2px; font-family: "Segoe UI", sans-serif; }
+  #tk-map .mark { fill: #4d6359; }
+  #tk-map .mark-label { fill: #7d9289; font-size: 10.5px; text-anchor: middle; font-family: "Segoe UI", sans-serif; }
+  .tk-legend { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 10px 0 14px; font-size: 12px; color: var(--muted); }
+  .tk-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+  .tk-list { display: flex; flex-direction: column; gap: 4px; max-height: 340px; overflow-y: auto; }
+  .tk-row {
+    font-size: 13px; line-height: 1.5; padding: 6px 10px; border-radius: 8px; cursor: pointer; text-align: center;
+  }
+  .tk-row:hover, .tk-row.hl { background: var(--panel-2); }
+  .tk-row.done { color: var(--muted); text-decoration: line-through; }
+  .tk-row b { color: var(--gold-2); font-weight: 600; }
+  .tk-row .trap { color: var(--red); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg class="crest" viewBox="0 0 100 87" aria-hidden="true">
+      <g fill="#d8b25c">
+        <polygon points="50,0 75,43.5 25,43.5"/>
+        <polygon points="25,43.5 50,87 0,87"/>
+        <polygon points="75,43.5 100,87 50,87"/>
+      </g>
+    </svg>
+    <h1>OoT Studio</h1>
+    <div class="subtitle">Ocarina of Time Randomizer</div>
+  </header>
+
+  <section>
+    <h2>Seed</h2>
+    <div class="seed-row">
+      <input type="text" id="seed" spellcheck="false" placeholder="Leave empty for a random seed">
+      <button id="reroll">Random</button>
+    </div>
+    <div class="hint">The same seed and settings always produce the same game. Words work too.</div>
+  </section>
+
+  <section>
+    <h2>Logic</h2>
+    <div class="levels" id="levels"></div>
+    <div class="hint">Every seed is played through from start to Ganon before it is installed, so it is always beatable.</div>
+  </section>
+
+  <section>
+    <h2>Shuffle</h2>
+    <div class="toggles" id="toggles"></div>
+  </section>
+
+  <section>
+    <h2>Traps</h2>
+    <div class="levels traps" id="traps"></div>
+    <div class="hint">Traps replace some small items with Ice, Fire or regular Keese. About half of the trapped pots, rocks and crates glow gold as fake treasure.</div>
+  </section>
+
+  <section>
+    <h2>Cosmetics</h2>
+    <div class="colors" id="colors"></div>
+    <div class="hint">Recolors the tunics and gauntlets using the classic randomizer color names. Random picks are tied to the seed.</div>
+  </section>
+
+  <button id="generate">Generate &amp; Install</button>
+  <div class="status" id="status"></div>
+
+  <section id="result">
+    <h2>Installed Seed</h2>
+    <div class="seed-big" id="r-seed"></div>
+    <div class="stats">
+      <div class="stat"><div class="n" id="r-locs"></div><div class="l">Locations</div></div>
+      <div class="stat"><div class="n" id="r-moved"></div><div class="l">Items Moved</div></div>
+      <div class="stat"><div class="n" id="r-hidden"></div><div class="l">Gold Treasures</div></div>
+      <div class="stat"><div class="n" id="r-traps"></div><div class="l">Traps</div></div>
+      <div class="stat"><div class="n" id="r-rounds"></div><div class="l">Rounds</div></div>
+    </div>
+    <div class="actions">
+      <button id="show-rounds">Show Playthrough</button>
+      <button id="open-spoiler">Open Spoiler Log</button>
+    </div>
+    <div id="rounds"></div>
+  </section>
+
+  <section id="tracker" style="display:none">
+    <h2>Tracker</h2>
+    <div class="tk-top">
+      <select id="tk-area"></select>
+      <div class="tk-total" id="tk-total"></div>
+    </div>
+    <div class="tk-filters">
+      <div class="chip" data-age="all">Both Ages</div>
+      <div class="chip" data-age="Child">Child</div>
+      <div class="chip" data-age="Adult">Adult</div>
+      <div class="chip" id="tk-small">Small Spots</div>
+      <div class="chip" id="tk-reveal">Reveal Items</div>
+    </div>
+    <svg id="tk-map" viewBox="0 0 600 440" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="tk-legend">
+      <span><i style="background:#d8b25c"></i>Chest</span>
+      <span><i style="background:#e0708a"></i>Heart Piece Spot</span>
+      <span><i style="background:#d9692f"></i>Pot, Rock or Crate</span>
+      <span><i style="background:#6fb3e0"></i>Gift or Shop</span>
+      <span><i style="background:#8fa39a"></i>Rupee Spot</span>
+    </div>
+    <div class="tk-list" id="tk-list"></div>
+    <div class="hint">Click a dot or a row to tick it off. Progress is saved per seed. North is up.</div>
+  </section>
+
+  <section>
+    <h2>Installed Mods</h2>
+    <div class="installed-list" id="installed"></div>
+    <div class="actions" style="margin-top:14px"><button id="open-mods">Open Mods Folder</button></div>
+  </section>
+
+  <footer>Restart the game in Lichii after generating so the new seed is loaded.</footer>
+</main>
+
+<script>
+const TOGGLES = [
+  ["shuffle_chests", "Chests", "Every treasure chest in the game"],
+  ["shuffle_floor", "Floor Heart Pieces", "Heart Pieces lying in the world"],
+  ["shuffle_shops", "Shop Stock", "What every shop sells"],
+  ["shuffle_maps_compasses", "Maps & Compasses", "Shuffled among their own dungeon's chests"],
+  ["shuffle_npcs", "NPC Gifts", "Darunia, Great Fairies, minigames and Skull Kid"],
+  ["shuffle_minigames", "Minigame Prizes", "Galleries, targets, archery, rolling Goron, bowling"],
+  ["shuffle_sidequests", "Side Quest Rewards", "Cuccos, Talon, Richard, Poes, Potion Shop, Mask of Truth"],
+  ["shuffle_skulltula_rewards", "Skulltula House", "Token rewards hold non-required items"],
+  ["shuffle_great_fairies", "Great Fairy Upgrades", "Magic, Double Magic, Double Defense"],
+  ["shuffle_story_gifts", "Story Gifts", "Weird Egg, Zelda's Letter, Light Arrows"],
+  ["shuffle_trade_rewards", "Trading Quest Reward", "Biggoron's reward is random"],
+  ["shuffle_rupees", "Floor Rupees", "Rupees lying around can become anything small"],
+  ["shuffle_pots", "Pots & Jars", "Pots and jars can hold an item when smashed"],
+  ["shuffle_crates", "Crates", "Wooden crates can hold an item when broken"],
+  ["shuffle_beehives", "Beehives", "Beehives can drop an item when knocked down"],
+  ["shuffle_grass", "Grass", "Special grass patches can hide an item when cut"],
+  ["shuffle_rocks", "Rocks & Boulders", "Every liftable rock and bombable boulder can hide an item, and the ones that do turn gold"],
+  ["small_anything", "Anything Anywhere", "Rupees, hearts, pots and rocks can hold any item. Major items drop out and are picked up like a rupee", true],
+  ["color_breakables", "Gold Hidden Treasure", "Gold pots and tinted rocks and crates hide something special, but some are fakes"],
+  ["map_markers", "Map Markers", "Chests, Heart Piece spots and gold treasure show as icons on the in-game map"],
+  ["cutscene_chests", "Cutscene Chests", "Major item chests that play a special get-item scene"],
+  ["open_forest", "Open Forest", "Mido and the exit guard step aside, so you can leave the forest or enter the Deku Tree right away"],
+  ["skip_intro", "Skip Intro", "The opening movie can be skipped like any other cutscene"],
+];
+const LEVEL_NAMES = { safe: "Safe", relaxed: "Relaxed", none: "No Logic" };
+const state = { options: {}, result: null };
+const $ = id => document.getElementById(id);
+
+function renderLevels(levels) {
+  const box = $("levels");
+  box.innerHTML = "";
+  for (const [key, text] of Object.entries(levels)) {
+    const el = document.createElement("div");
+    el.className = "level" + (state.options.logic === key ? " active" : "");
+    const desc = text.split(": ").slice(1).join(": ");
+    el.innerHTML = `<div class="name">${LEVEL_NAMES[key] || key}</div><div class="desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>`;
+    el.onclick = () => { state.options.logic = key; renderLevels(levels); };
+    box.appendChild(el);
+  }
+}
+
+const TRAP_LEVELS = [
+  ["off", "Off", "No traps"],
+  ["some", "Some", "About 1 in 16 small items"],
+  ["lots", "Lots", "About 1 in 5 small items"],
+];
+
+function renderTraps() {
+  const box = $("traps");
+  box.innerHTML = "";
+  for (const [key, name, desc] of TRAP_LEVELS) {
+    const el = document.createElement("div");
+    el.className = "level" + (state.options.traps === key ? " active" : "");
+    el.innerHTML = `<div class="name">${name}</div><div class="desc">${desc}</div>`;
+    el.onclick = () => { state.options.traps = key; renderTraps(); };
+    box.appendChild(el);
+  }
+}
+
+function renderToggles() {
+  const box = $("toggles");
+  box.innerHTML = "";
+  for (const [key, label, sub, wide] of TOGGLES) {
+    const el = document.createElement("div");
+    el.className = "toggle" + (state.options[key] ? " on" : "") + (wide ? " wide" : "");
+    el.innerHTML = `<div class="switch"></div><div class="label">${label}</div><div class="sub">${sub}</div>`;
+    el.onclick = () => { state.options[key] = !state.options[key]; renderToggles(); };
+    box.appendChild(el);
+  }
+}
+
+const SPECIAL = ["Default", "Random Choice", "Completely Random", "Custom"];
+
+function hex(rgb) { return "#" + rgb.map(c => c.toString(16).padStart(2, "0")).join("").toUpperCase(); }
+
+function renderColors(slots) {
+  const box = $("colors");
+  box.innerHTML = "";
+  state.options.cosmetics = state.options.cosmetics || {};
+  for (const [key, slot] of Object.entries(state.options.model_slots || {})) {
+    const el = document.createElement("div");
+    el.className = "color";
+    const current = state.options.cosmetics[key] || slot.default;
+    el.innerHTML = `<label>${slot.label}</label><select>${slot.choices.map(n => `<option${n === current ? " selected" : ""}>${n}</option>`).join("")}</select>`;
+    el.querySelector("select").onchange = e => { state.options.cosmetics[key] = e.target.value; };
+    box.appendChild(el);
+  }
+  for (const [key, slot] of Object.entries(slots)) {
+    const el = document.createElement("div");
+    el.className = "color";
+    const fallback = slot.match ? "Contrast" : "Default";
+    if (!state.options.cosmetics[key]) state.options.cosmetics[key] = fallback;
+    const current = state.options.cosmetics[key];
+    const isCustom = current.startsWith("#");
+    const names = Object.keys(slot.palette);
+    const specials = slot.match ? ["Contrast", "Match Tunic", ...SPECIAL] : SPECIAL;
+    el.innerHTML = `<div class="label">${slot.label}</div>
+      <div class="row"><div class="swatch"></div><select>${
+        [...specials, ...names].map(n => `<option${(isCustom ? n === "Custom" : n === current) ? " selected" : ""}>${n}</option>`).join("")
+      }</select><input type="color" style="display:none"></div>`;
+    const sel = el.querySelector("select");
+    const pick = el.querySelector("input");
+    const swatch = el.querySelector(".swatch");
+    const paint = () => {
+      const v = state.options.cosmetics[key] || "Default";
+      pick.style.display = sel.value === "Custom" ? "block" : "none";
+      if (v.startsWith("#")) swatch.style.background = v;
+      else if (v === "Contrast") swatch.style.background = "linear-gradient(135deg, #1E691B 50%, #95308A 50%)";
+      else if (v === "Match Tunic") swatch.style.background = "linear-gradient(135deg, #1E691B 50%, #2a3a33 50%)";
+      else if (v === "Default") swatch.style.background = hex(slot.palette[slot.default]);
+      else if (slot.palette[v]) swatch.style.background = hex(slot.palette[v]);
+      else swatch.style.background = "conic-gradient(red, yellow, lime, cyan, blue, magenta, red)";
+    };
+    pick.value = isCustom ? current : hex(slot.palette[slot.default]);
+    sel.onchange = () => {
+      state.options.cosmetics[key] = sel.value === "Custom" ? pick.value.toUpperCase() : sel.value;
+      paint();
+    };
+    pick.oninput = () => { state.options.cosmetics[key] = pick.value.toUpperCase(); paint(); };
+    paint();
+    box.appendChild(el);
+  }
+}
+
+function renderInstalled(list) {
+  const box = $("installed");
+  box.innerHTML = "";
+  if (!list.length) {
+    box.innerHTML = `<div class="empty">No mods installed. The game will play normally.</div>`;
+    return;
+  }
+  for (const name of list) {
+    const row = document.createElement("div");
+    row.className = "mod";
+    row.innerHTML = `<span class="name">${name}</span><button class="danger">Remove</button>`;
+    row.querySelector("button").onclick = async () => renderInstalled(await pywebview.api.remove(name));
+    box.appendChild(row);
+  }
+}
+
+function setStatus(text, kind) {
+  const el = $("status");
+  el.className = "status" + (kind === "error" ? " error" : "");
+  el.innerHTML = kind === "busy" ? `<span class="spinner"></span>${text}` : text;
+}
+
+function renderResult(r) {
+  $("result").style.display = "block";
+  $("r-seed").textContent = `Seed ${r.seed}`;
+  $("r-locs").textContent = r.locations;
+  $("r-moved").textContent = r.moved;
+  $("r-hidden").textContent = r.hidden;
+  $("r-traps").textContent = r.traps;
+  $("r-rounds").textContent = r.rounds.length;
+  $("rounds").style.display = "none";
+  $("show-rounds").textContent = "Show Playthrough";
+  $("rounds").innerHTML = r.rounds.map((round, i) => `
+    <div class="round"><div class="title">Round ${i + 1}</div>
+      ${round.map(e => `<div class="entry"><b>${e.item}</b> <span>at ${e.where}</span></div>`).join("")}
+    </div>`).join("");
+}
+
+const KIND_COLORS = { chest: "#d8b25c", floor: "#e0708a", breakable: "#d9692f", npc: "#6fb3e0", shop: "#6fb3e0", rupee: "#8fa39a" };
+const tk = { data: null, area: null, age: "all", small: false, reveal: false, checked: new Set() };
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+
+function tkVisible(c) {
+  if (!tk.small && !c.important) return false;
+  if (tk.age !== "all" && c.ages.length && !c.ages.includes(tk.age)) return false;
+  return true;
+}
+
+function tkAreaLabel(key) {
+  const a = tk.data.areas[key];
+  const vis = a.checks.filter(tkVisible);
+  return `${a.name}  (${vis.filter(c => tk.checked.has(c.id)).length}/${vis.length})`;
+}
+
+function renderTrackerAreas() {
+  const sel = $("tk-area");
+  sel.innerHTML = Object.keys(tk.data.areas).map(k => `<option value="${k}"${k === tk.area ? " selected" : ""}>${esc(tkAreaLabel(k))}</option>`).join("");
+  let all = 0, done = 0;
+  for (const a of Object.values(tk.data.areas)) for (const c of a.checks) if (tkVisible(c)) { all++; if (tk.checked.has(c.id)) done++; }
+  $("tk-total").textContent = `${done} of ${all} checks done`;
+}
+
+function tkToggle(id) {
+  tk.checked.has(id) ? tk.checked.delete(id) : tk.checked.add(id);
+  pywebview.api.set_checked(tk.data.seed, [...tk.checked]);
+  renderTracker();
+}
+
+function renderTracker() {
+  if (!tk.data) return;
+  document.querySelectorAll(".chip[data-age]").forEach(el => el.classList.toggle("on", el.dataset.age === tk.age));
+  $("tk-small").classList.toggle("on", tk.small);
+  $("tk-reveal").classList.toggle("on", tk.reveal);
+  renderTrackerAreas();
+  const area = tk.data.areas[tk.area];
+  const checks = area.checks.filter(tkVisible);
+  const map = $("tk-map");
+  const img = (area.maps || {})[tk.age === "Adult" ? "Adult" : "Child"] || Object.values(area.maps || {})[0];
+  if (img) renderImageMap(map, img, checks);
+  else renderPlotMap(map, area, checks);
+  map.querySelectorAll(".dot").forEach(el => {
+    el.onclick = () => tkToggle(el.dataset.id);
+    el.onmouseenter = () => { const row = document.querySelector(`.tk-row[data-id="${el.dataset.id}"]`); if (row) { row.classList.add("hl"); row.scrollIntoView({ block: "nearest" }); } };
+    el.onmouseleave = () => document.querySelectorAll(".tk-row.hl").forEach(r => r.classList.remove("hl"));
+  });
+  const list = $("tk-list");
+  list.innerHTML = checks.map(c => {
+    const where = c.where.split(": ").slice(1).join(": ");
+    const item = tk.reveal ? ` <b>${esc(c.item)}</b>${c.trap ? ' <span class="trap">trap</span>' : ""}` : "";
+    return `<div class="tk-row${tk.checked.has(c.id) ? " done" : ""}" data-id="${c.id}">${esc(where.charAt(0).toUpperCase() + where.slice(1))}${item}</div>`;
+  }).join("") || `<div class="empty">No checks here for this age.</div>`;
+  list.querySelectorAll(".tk-row").forEach(el => el.onclick = () => tkToggle(el.dataset.id));
+}
+
+function tkDot(c, x, y, r) {
+  const done = tk.checked.has(c.id);
+  const tip = `${c.where}${tk.reveal ? " — " + c.item + (c.trap ? " (trap)" : "") : ""}`;
+  return `<circle class="dot${done ? " done" : ""}${tk.reveal && c.major ? " major" : ""}" data-id="${c.id}" cx="${x}" cy="${y}" r="${r}" fill="${KIND_COLORS[c.kind] || "#8fa39a"}"><title>${esc(tip)}</title></circle>`;
+}
+
+function renderImageMap(map, img, checks) {
+  const unit = img.span / Math.max(img.full_w, img.full_h);
+  const inside = [], outside = [];
+  for (const c of checks) {
+    const x = (c.x - img.cx) / unit + img.full_w / 2 - img.x0, y = (c.z - img.cz) / unit + img.full_h / 2 - img.y0;
+    (x >= 0 && x <= img.w && y >= 0 && y <= img.h ? inside : outside).push([c, x, y]);
+  }
+  const strip = outside.length ? 90 : 0;
+  const R = img.full_w / 70, r = img.full_w / 105;
+  let svg = `<image href="${img.image}" x="0" y="0" width="${img.w}" height="${img.h}"/>`;
+  const order = [...inside].sort((a, b) => tk.checked.has(b[0].id) - tk.checked.has(a[0].id));
+  for (const [c, x, y] of order) svg += tkDot(c, x, y, c.important ? R : r);
+  if (strip) {
+    svg += `<rect x="0" y="${img.h}" width="${img.w}" height="${strip}" fill="#141e1a"/>`;
+    svg += `<text class="strip-label" x="${img.w / 2}" y="${img.h + 28}">Inside buildings and grottos</text>`;
+    const step = Math.min(R * 2.8, (img.w - 80) / outside.length);
+    const start = img.w / 2 - step * (outside.length - 1) / 2;
+    outside.forEach(([c], i) => { svg += tkDot(c, start + i * step, img.h + 60, c.important ? R : r); });
+  }
+  map.setAttribute("viewBox", `0 0 ${img.w} ${img.h + strip}`);
+  map.innerHTML = svg;
+}
+
+function renderPlotMap(map, area, checks) {
+  const pts = [...area.checks.map(c => [c.x, c.z]), ...area.landmarks.map(m => [m[1], m[2]])];
+  const xs = pts.map(p => p[0]), zs = pts.map(p => p[1]);
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minZ = Math.min(...zs), maxZ = Math.max(...zs);
+  const W = 600, H = 440, pad = 34;
+  const scale = Math.min((W - 2 * pad) / Math.max(maxX - minX, 1), (H - 2 * pad) / Math.max(maxZ - minZ, 1));
+  const ox = (W - (maxX - minX) * scale) / 2, oz = (H - (maxZ - minZ) * scale) / 2;
+  const px = x => ox + (x - minX) * scale, pz = z => oz + (z - minZ) * scale;
+  let svg = "";
+  const shown = new Set();
+  for (const [label, x, z] of area.landmarks) {
+    if (shown.has(label)) continue;
+    shown.add(label);
+    const text = label.replace(/^the way to /, "To ").replace(/^the /, "").replace(/^a /, "");
+    const anchor = px(x) < 110 ? "start" : px(x) > W - 110 ? "end" : "middle";
+    const tx = anchor === "start" ? px(x) - 6 : anchor === "end" ? px(x) + 6 : px(x);
+    svg += `<rect class="mark" x="${px(x) - 4}" y="${pz(z) - 4}" width="8" height="8" transform="rotate(45 ${px(x)} ${pz(z)})"/>`;
+    svg += `<text class="mark-label" style="text-anchor:${anchor}" x="${tx}" y="${pz(z) - 10}">${esc(text)}</text>`;
+  }
+  const order = [...checks].sort((a, b) => (tk.checked.has(b.id) - tk.checked.has(a.id)));
+  for (const c of order) svg += tkDot(c, px(c.x), pz(c.z), c.important ? 7 : 4.5);
+  map.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  map.innerHTML = svg;
+}
+
+async function loadTracker(seed) {
+  const d = await pywebview.api.tracker(seed ?? null);
+  if (!d) return;
+  tk.data = d;
+  tk.checked = new Set(d.checked);
+  if (!tk.data.areas[tk.area]) tk.area = Object.keys(d.areas).includes("KokiriForest") ? "KokiriForest" : Object.keys(d.areas)[0];
+  $("tracker").style.display = "block";
+  renderTracker();
+}
+
+async function generate() {
+  const btn = $("generate");
+  btn.disabled = true;
+  setStatus("Placing items, checking the playthrough, and writing the mod...", "busy");
+  const options = { ...state.options, seed: $("seed").value };
+  const r = await pywebview.api.generate(options);
+  btn.disabled = false;
+  if (!r.ok) { setStatus(r.error, "error"); return; }
+  state.result = r;
+  $("seed").value = r.seed;
+  setStatus(`Seed ${r.seed} is installed and ready to play.`);
+  renderResult(r);
+  renderInstalled(r.installed);
+  loadTracker(r.seed);
+}
+
+window.addEventListener("pywebviewready", async () => {
+  const d = await pywebview.api.defaults();
+  Object.assign(state.options, d);
+  $("seed").value = d.seed;
+  renderLevels(d.levels);
+  renderToggles();
+  renderTraps();
+  renderColors(d.cosmetic_slots);
+  renderInstalled(d.installed);
+  $("reroll").onclick = async () => { $("seed").value = await pywebview.api.random_seed(); };
+  $("generate").onclick = generate;
+  $("open-mods").onclick = () => pywebview.api.open_mods();
+  $("open-spoiler").onclick = () => state.result && pywebview.api.open_path(state.result.spoiler);
+  $("tk-area").onchange = e => { tk.area = e.target.value; renderTracker(); };
+  document.querySelectorAll(".chip[data-age]").forEach(el => el.onclick = () => { tk.age = el.dataset.age; renderTracker(); });
+  $("tk-small").onclick = () => { tk.small = !tk.small; renderTracker(); };
+  $("tk-reveal").onclick = () => { tk.reveal = !tk.reveal; renderTracker(); };
+  loadTracker();
+  $("show-rounds").onclick = () => {
+    const box = $("rounds");
+    const open = box.style.display === "block";
+    box.style.display = open ? "none" : "block";
+    $("show-rounds").textContent = open ? "Show Playthrough" : "Hide Playthrough";
+  };
+});
+</script>
+</body>
+</html>

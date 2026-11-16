@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+cache/
+spoilers/
+staging/
+research/
+tools/
+ui/maps/
+romfs_list.json
+web_build/node_modules/
+web_build/node_mod.zip
+web_build/*.whl
+../ootrando-site/
