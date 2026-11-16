@@ -185,7 +185,7 @@ const SETTINGS = [
 
 const PRESETS = [
   ["Beginner", "Forgiving logic, no traps", { logic: "safe", traps: "off", small_anything: false, shuffle_pots: false, shuffle_crates: false, shuffle_beehives: false, shuffle_grass: false, shuffle_rocks: false, shuffle_rupees: false, open_forest: "open" }],
-  ["Standard", "Our suggested settings", null],
+  ["Standard", "What I usually play", null],
   ["Full Randomizer", "Everything shuffled, with logic", { logic: "relaxed", traps: "some", small_anything: true,
     shuffle_chests: true, cutscene_chests: true, shuffle_npcs: true, shuffle_shops: true, shuffle_floor: true,
     shuffle_rupees: true, shuffle_hearts: true, shuffle_pots: true, shuffle_crates: true, shuffle_beehives: true,
@@ -418,7 +418,7 @@ function renderPicker(info, error, warning) {
          <button class="ghost" id="pick-folder">Choose Extracted Folder</button>
        </div>
        <div class="meta">Fully supported: <b>.nup</b> files and extracted <b>RomFS folders</b>.</div>
-       <div class="meta">Other formats such as NSP or XCI: we will attempt to read them. If that fails, a short report about how the file is laid out is sent to the developer so support can be added. No game data is ever sent.</div>
+       <div class="meta">NSP, XCI and similar files: it will try. If it can't read one, it sends me a short note about how the file is laid out so I can add support. No game data is ever sent.</div>
        ${error ? `<div class="pick-error">${esc(error)}</div>` : ""}`;
   const input = document.createElement("input");
   input.type = "file";
@@ -461,7 +461,7 @@ async function loadGame(kind, getSource, file) {
     state.gameInfo = info;
     let warning = "";
     if (info.known_version === false) {
-      warning = "We couldn't recognise this game version. The mod may not match it, so if anything goes wrong, try a .nup file instead. A short report was sent to the developer.";
+      warning = "I couldn't recognise this game version. The mod may not match it, so if anything goes wrong, try a .nup file instead. A short report was sent to me so I can look into it.";
       reportError("folder-version", "Unknown RomFS folder version", { detail: JSON.stringify({ hashes: info.hashes, missing: info.missing }) });
     } else if (info.missing && info.missing.length) {
       reportError("folder-missing", `RomFS folder is missing ${info.missing.length} files`, { detail: info.missing.join("\n") });
@@ -476,7 +476,7 @@ async function loadGame(kind, getSource, file) {
       const message = (known
         ? `This looks like an ${e.format} file (${e.contents}). It is encrypted, so it can't be read in the browser yet. `
         : "This isn't a game format we recognise yet. ") +
-        `A short report about how the file is laid out (${known ? "file names and sizes only, " : ""}no game data) was sent to the developer to help add support. ` +
+        `A short report about how the file is laid out (${known ? "file names and sizes only, " : ""}no game data) was sent to me so I can add support. ` +
         "For now, please use a .nup file or an extracted RomFS folder.";
       renderPicker(null, message);
       setStatus("This game format isn't supported yet.", "error");
@@ -665,7 +665,7 @@ function setupFeedback() {
         return say(`${esc(r.error)} ${fallback}`, true);
       }
       form.message.value = "";
-      say("Thanks! Your message was sent.");
+      say("Thanks, I got it. I'll read it soon.");
     } catch (e) {
       reportError("feedback", e);
       say(`The message could not be sent from here. ${fallback}`, true);

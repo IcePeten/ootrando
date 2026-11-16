@@ -3,184 +3,183 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ocarina of Time Randomizer</title>
+<title>Ocarina of Time Randomizer for Switch 2</title>
+<meta name="description" content="A fan-made item randomizer for The Legend of Zelda: Ocarina of Time on Nintendo Switch 2. Runs in your browser using your own copy of the game.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="page">
+
 <nav class="topbar">
-  <a class="top-btn donate" href="https://www.paypal.com/donate/?business=LicePeten%40gmail.com&amp;currency_code=USD&amp;item_name=Ocarina%20of%20Time%20Randomizer" target="_blank" rel="noopener">Donate</a>
-  <button class="top-btn" id="open-feedback" type="button">Feedback &amp; Ideas</button>
-  <a class="top-btn" href="https://github.com/IcePeten/ootrando" target="_blank" rel="noopener">Source Code</a>
+  <a href="https://www.paypal.com/donate/?business=LicePeten%40gmail.com&amp;currency_code=USD&amp;item_name=Ocarina%20of%20Time%20Randomizer" target="_blank" rel="noopener">Donate</a>
+  <span aria-hidden="true">&middot;</span>
+  <button id="open-feedback" type="button">Send feedback</button>
+  <span aria-hidden="true">&middot;</span>
+  <a href="https://github.com/IcePeten/ootrando" target="_blank" rel="noopener">Source on GitHub</a>
 </nav>
+
 <header class="hero">
-  <img class="logo" src="/logo.png" alt="The Legend of Zelda: Ocarina of Time Randomizer" onerror="this.replaceWith(Object.assign(document.createElement('h1'), {className: 'logo-text', textContent: 'Ocarina of Time Randomizer'}))">
-  <p class="tagline">Item randomizer for the Nintendo Switch 2 edition</p>
-  <div class="disclosure">
-    <p><b>Fan project, built with AI assistance.</b> The code was written with an AI coding assistant and tested by playing it in an emulator.</p>
-    <p>The randomizer logic is <b>experimental</b>: it follows the original game's routes, and parts of the remake have changed. <a href="#" data-goto="how">Read more</a> or <a href="#" data-report-logic>report a problem</a>.</p>
-  </div>
+  <h1 class="logo-text"><small>The Legend of Zelda</small>Ocarina of Time<em>Randomizer</em></h1>
+  <p class="edition">for the Nintendo Switch&nbsp;2 edition</p>
+  <p class="intro">I wanted to play an Ocarina of Time randomizer on the Switch 2 version, and there wasn't one, so I made one. Pick your settings, point it at your own copy of the game, and it builds a mod folder for your emulator. Nothing leaves your computer.</p>
   <nav class="tabs" id="views">
-    <button data-view="generate" class="on">Generate</button>
+    <button data-view="generate" class="on">Make a Seed</button>
     <button data-view="how">How It Works</button>
-    <button data-view="credits">Credits</button>
+    <button data-view="credits">About &amp; Credits</button>
   </nav>
 </header>
 
 <main>
   <div class="view" id="view-generate">
-    <section class="card showcase">
-      <div class="step">Showcase</div>
-      <h2>See It in Action</h2>
-      <figure class="shot wide">
-        <a href="shot-title.webp" target="_blank"><img src="shot-title.webp" alt="Title screen with Randomizer under the Ocarina of Time logo" width="1024" height="582" loading="lazy"></a>
-        <figcaption><b>Your own title screen</b>Every seed adds Randomizer to the logo and the main menu.</figcaption>
-      </figure>
+    <section class="showcase">
       <div class="shots">
         <figure class="shot">
+          <a href="shot-title.webp" target="_blank"><img src="shot-title.webp" alt="Title screen with Randomizer under the Ocarina of Time logo" width="1024" height="582" loading="lazy"></a>
+          <figcaption><b>Title screen</b>Every seed adds Randomizer under the logo.</figcaption>
+        </figure>
+        <figure class="shot">
           <a href="shot-chest.webp" target="_blank"><img src="shot-chest.webp" alt="Link beside an opened chest in the Lost Woods" width="1024" height="588" loading="lazy"></a>
-          <figcaption><b>Anything, anywhere</b>Chests, shops, gifts and ground items are all shuffled.</figcaption>
+          <figcaption><b>Lost Woods chest</b>Chests, shops, gifts and items on the ground get shuffled.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-tunic.webp" target="_blank"><img src="shot-tunic.webp" alt="Link wearing a pink and purple tunic" width="863" height="1024" loading="lazy"></a>
-          <figcaption><b>Pick your colors</b>Recolor the tunic, hat, trim and undershirt.</figcaption>
+          <figcaption><b>Tunic colors</b>Tunic, hat, trim and undershirt can all be recolored.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-menu.webp" target="_blank"><img src="shot-menu.webp" alt="Equipment menu showing the recolored Kokiri Tunic" width="1024" height="704" loading="lazy"></a>
-          <figcaption><b>Shown everywhere</b>Your colors carry into the menus too.</figcaption>
+          <figcaption><b>Gear menu</b>The colors show up in the menus too.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-back.webp" target="_blank"><img src="shot-back.webp" alt="Back of Link's recolored hat in the equipment menu" width="1024" height="582" loading="lazy"></a>
-          <figcaption><b>Every detail</b>Even the stitching and patterns on the hat.</figcaption>
+          <figcaption><b>Hat stitching</b>The pattern lines keep their own color.</figcaption>
         </figure>
-      </div>
-      <h3 class="shots-title">Silly Bodies: Lank and Lunk</h3>
-      <div class="shots three">
         <figure class="shot">
           <a href="shot-lank-castle.webp" target="_blank"><img src="shot-lank-castle.webp" alt="Stretched Lank facing Ganondorf's Castle" width="1024" height="570" loading="lazy"></a>
-          <figcaption><b>Lank at the castle</b>Adult Link wearing young Link's body, stretched to fit.</figcaption>
+          <figcaption><b>Lank</b>Adult Link stretched over young Link's body.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-lunk-shield.webp" target="_blank"><img src="shot-lunk-shield.webp" alt="Stout Lunk holding up the Deku Shield" width="976" height="1024" loading="lazy"></a>
-          <figcaption><b>Lunk gets a shield</b>Young Link squeezed into adult Link's body.</figcaption>
+          <figcaption><b>Lunk</b>Young Link squeezed into adult Link's body.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-lank-medallion.webp" target="_blank"><img src="shot-lank-medallion.webp" alt="Lank receiving the Light Medallion" width="1024" height="804" loading="lazy"></a>
-          <figcaption><b>A face for every moment</b>Cutscenes play out with the swapped body.</figcaption>
+          <figcaption><b>Light Medallion</b>Cutscenes play out with the swapped body.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-lank-sheikah.webp" target="_blank"><img src="shot-lank-sheikah.webp" alt="Lank listening to Navi in the Temple of Time" width="1024" height="644" loading="lazy"></a>
-          <figcaption><b>Navi is unbothered</b>Every conversation still plays normally.</figcaption>
+          <figcaption><b>Temple of Time</b>Navi doesn't seem to mind.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-lank-stones.webp" target="_blank"><img src="shot-lank-stones.webp" alt="Lank posing with the Master Sword below the Spiritual Stones" width="1024" height="946" loading="lazy"></a>
-          <figcaption><b>Hero of Time</b>Full combat and sword moves still work.</figcaption>
+          <figcaption><b>Master Sword</b>Sword moves and combat work as normal.</figcaption>
         </figure>
         <figure class="shot">
           <a href="shot-lank-redead.webp" target="_blank"><img src="shot-lank-redead.webp" alt="A ReDead grabbing Lank" width="486" height="804" loading="lazy"></a>
-          <figcaption><b>Even the ReDeads</b>Grabs and enemy moves line up with the new body.</figcaption>
+          <figcaption><b>ReDead</b>Grabs still line up with the new body.</figcaption>
         </figure>
       </div>
-      <p class="note">Click a screenshot to enlarge it. All screenshots come from the developer's own copy of the game.</p>
+      <p class="note">Screenshots from my own copy, played in Lichii. Scroll sideways, or click one to see it bigger.</p>
     </section>
 
-    <section class="card">
-      <div class="step">Step 1</div>
-      <h2>Your Game</h2>
+    <section class="part">
+      <h2><span class="num">1</span>Your game</h2>
       <div id="game-box" class="game-box"></div>
-      <p class="note"><b>Getting a RomFS folder:</b> in most emulators, right-click the game and choose Dump RomFS or Extract RomFS. Include the update you play on, then choose the folder here.</p>
-      <p class="note">Only the few hundred files the randomizer uses are read from your copy. Nothing is uploaded, and no game files are stored on this site.</p>
+      <p class="note">To get a RomFS folder, right-click the game in your emulator and pick Dump RomFS (or Extract RomFS). Include the update you play on. Only the few hundred files the randomizer needs are read, and none of them are uploaded.</p>
     </section>
 
-    <section class="card">
-      <div class="step">Step 2</div>
-      <h2>Settings</h2>
+    <section class="part">
+      <h2><span class="num">2</span>Settings</h2>
+      <p class="lead">Start from one of these, then change whatever you like.</p>
       <div class="presets" id="presets"></div>
       <nav class="tabs small" id="groups"></nav>
       <p class="group-desc" id="group-desc"></p>
       <div class="settings" id="settings"></div>
     </section>
 
-    <section class="card">
-      <div class="step">Step 3</div>
-      <h2>Seed</h2>
+    <section class="part">
+      <h2><span class="num">3</span>Seed</h2>
       <div class="row">
         <input id="seed" type="text" spellcheck="false" placeholder="Leave empty for a random seed">
         <button id="reroll" class="ghost">Random</button>
       </div>
-      <p class="note">The same seed and settings always make the same game. Words work too.</p>
+      <p class="note">Same seed and same settings always give the same game. Any word works as a seed.</p>
       <div class="string-box">
-        <label for="settings-string">Settings String</label>
+        <label for="settings-string">Settings string</label>
         <div class="row">
           <input id="settings-string" type="text" spellcheck="false">
           <button id="copy-string" class="ghost">Copy</button>
           <button id="load-string" class="ghost">Load</button>
         </div>
-        <p class="note">Share this with friends so everyone races the same rules.</p>
+        <p class="note">Send this to a friend and you'll both be playing the same rules.</p>
       </div>
-      <button id="generate" class="primary">Generate Seed</button>
+      <button id="generate" class="primary">Generate</button>
       <div id="status" class="status"></div>
     </section>
 
-    <section class="card" id="result" hidden>
-      <div class="step">Ready</div>
+    <section class="part result" id="result" hidden>
       <h2 id="r-title"></h2>
       <div class="stats" id="r-stats"></div>
       <div class="row center">
-        <a id="r-download" class="primary button">Download Mod (.zip)</a>
-        <a id="r-spoiler" class="ghost button" target="_blank">Spoiler Log</a>
+        <a id="r-download" class="primary button">Download the mod (.zip)</a>
+        <a id="r-spoiler" class="ghost button" target="_blank">Spoiler log</a>
       </div>
-      <p class="note">The spoiler log lists where every item went. Only open it if you get stuck.</p>
+      <p class="note">The spoiler log says where every item ended up. Save it for when you're truly stuck.</p>
       <p class="note" id="r-installed"></p>
-      <h3>Install the Mod</h3>
+      <h3>Installing it</h3>
       <div class="install" data-install></div>
     </section>
   </div>
 
   <div class="view" id="view-how" hidden>
-    <section class="card prose">
-      <h2>How It Works</h2>
-      <h3>1. Your game files are never changed</h3>
-      <p>Nothing in your dump is edited. The site produces a separate <b>mod folder</b> containing replacement files, and the emulator reads those instead of the originals. Remove the folder and the game is exactly as it was.</p>
-      <h3>2. Placement follows a set of rules</h3>
-      <p>Before an important item is placed, the randomizer checks that you could reach that spot without already owning the item. Once everything is placed, it simulates a full playthrough to make sure Ganon can be reached, and starts over if not. No Logic turns all of this off.</p>
-      <h3>3. Experimental logic</h3>
-      <p>The rules about what each area needs are based on the original game and are still being checked against the remake. Some places were redesigned, including parts of Death Mountain and the Hyrule Castle grounds, and a few Heart Pieces and Gold Skulltulas moved. A seed can occasionally expect a route that doesn't exist anymore.</p>
-      <p>If you get stuck because an item seemed reachable but wasn't, please <a href="#" data-report-logic>report a logic problem</a> with your settings string. Each report helps correct the rules.</p>
-      <h3>4. The mod is built from your copy</h3>
-      <p>Item spots are written into each area's layout files, character rewards into their scripts, new-file defaults into the save data list, and colors into Link's textures. Important items that end up on the ground become new objects that you collect by walking into them.</p>
-      <h3>5. Install and play</h3>
+    <section class="part prose">
+      <h2>How it works</h2>
+      <h3>Your game files aren't touched</h3>
+      <p>The site makes a separate mod folder full of replacement files, and your emulator loads those instead of the originals. Delete the folder and the game is back to normal.</p>
+      <h3>Every seed is checked before you get it</h3>
+      <p>An important item only goes somewhere you could reach without already having it. Once everything is placed, the randomizer plays through the whole seed on its own to make sure Ganon can be reached, and throws the seed away if not. No Logic skips all of this.</p>
+      <h3>The rules come from the remake itself</h3>
+      <p>Young Link and adult Link are tracked separately, since they can reach different places with different tools. The requirements were checked against the Switch 2 version's own level files: what covers each grotto (Song of Storms, a bombable floor, a heavy rock, a hammer rock), what's waiting inside, which Gold Skulltulas sit on bean patches, trees, crates or walls, and spots the remake moved, like Ruto's Letter at the bottom of Lake Hylia.</p>
+      <p>It hasn't been through enough full playthroughs to be called finished. If a seed ever expects you to reach something you can't, please <a href="#" data-report-logic>tell me</a> and include your settings string. I read every report.</p>
+      <h3>What the mod changes</h3>
+      <p>Item spots are written into each area's layout files, rewards into the characters' scripts, starting items into the new-save defaults, and colors into Link's textures. Important items that land on the ground become objects you pick up by walking into them.</p>
+      <h3>Installing</h3>
       <div class="install" data-install></div>
-      <h3>Supported game files</h3>
-      <p><b>.nup</b> game files and extracted <b>RomFS folders</b> are fully supported. For a folder, extract the game's RomFS with your emulator, including the update you play on, and choose that folder. Only the files the randomizer needs are opened.</p>
-      <p>Other formats such as NSP, XCI, NSZ and XCZ are encrypted. The site will attempt to read them, and if it can't, it sends the developer a short report describing how the file is laid out: the names and sizes of the parts inside it. No game data, keys or personal files are ever sent.</p>
-      <h3>Game version</h3>
-      <p>Mods are built for the exact game version you provide. After a game update, generate a new seed from the updated copy.</p>
+      <h3>Which game files work</h3>
+      <p><b>.nup</b> files and extracted <b>RomFS folders</b> both work fully. For a folder, extract the RomFS with your emulator, including the update you play on.</p>
+      <p>NSP, XCI, NSZ and XCZ files are encrypted. The site will still try, and if it can't read one it sends me a short description of how the file is laid out (the names and sizes of the parts inside) so I can add support. No game data, keys or personal files are ever sent.</p>
+      <h3>Game updates</h3>
+      <p>A mod is built for the exact game version you give it. After the game updates, make a new seed from the updated copy.</p>
     </section>
   </div>
 
   <div class="view" id="view-credits" hidden>
-    <section class="card prose">
-      <h2>Credits</h2>
+    <section class="part prose">
+      <h2>About this project</h2>
+      <p>This is a hobby project by one person. I've loved Ocarina of Time randomizers for years, and when the remake came out I wanted to play one on it. I wrote the code with help from an AI coding assistant, then tested each change by actually playing it in Lichii, often over and over until chests opened, text showed up and items stopped vanishing. All locations, scripts and map data were read from my own copy of the game.</p>
+      <p>The code is public on <a href="https://github.com/IcePeten/ootrando" target="_blank" rel="noopener">GitHub</a> under GPL-3.0-or-later, so anyone can check how it works or help improve it.</p>
       <h3>Inspiration</h3>
-      <p>The idea of an Ocarina of Time randomizer, and many of the options here, come from the <a href="https://ootrandomizer.com" target="_blank" rel="noopener">Ocarina of Time Randomizer</a> for the original Nintendo 64 game and the community around it. That includes keysanity, song shuffle, Gossip Stone hints, open settings, Gold Skulltula shuffle and traps. The Lank and Lunk body swaps are a nod to the long-running community joke. This project is not affiliated with them and shares none of their code, but it would not exist without their years of work. Please support them.</p>
-      <p>Thanks also to the speedrunning and randomizer communities, such as ZeldaSpeedRuns, whose players and streamers made these games so much fun to watch.</p>
-      <h3>How this was made</h3>
-      <p>This is a hobby project by one fan who wanted to play a randomizer on this version of the game. All of the code was written with an <b>AI coding assistant</b>, then tested and corrected by playing each change in the Lichii emulator. Locations, scripts and map data were found by reading the developer's own copy of the game. The logic rules are based on how the original game works and are still being checked against the remake.</p>
-      <h3>Open source tools</h3>
+      <p>The idea, and many of the options, come from the <a href="https://ootrandomizer.com" target="_blank" rel="noopener">Ocarina of Time Randomizer</a> for the N64 game and the community around it: keysanity, song shuffle, Gossip Stone hints, open settings, Gold Skulltula shuffle and traps. Lank and Lunk are a nod to the long-running community joke. This project isn't affiliated with them and shares none of their code, but it wouldn't exist without their work. Please support them.</p>
+      <p>Thanks also to the speedrunning and randomizer communities, ZeldaSpeedRuns especially, for making these games so much fun to watch.</p>
+      <h3>Open source tools used</h3>
       <ul class="credits-list">
-        <li><a href="https://github.com/leoetlino/evfl" target="_blank" rel="noopener">evfl</a> by leoetlino, for reading and writing event scripts (GPL-2.0-or-later)</li>
+        <li><a href="https://github.com/leoetlino/evfl" target="_blank" rel="noopener">evfl</a> by leoetlino, for event scripts (GPL-2.0-or-later)</li>
         <li><a href="https://github.com/ARM-software/astc-encoder" target="_blank" rel="noopener">astc-encoder</a> by Arm, for texture recoloring (Apache-2.0)</li>
         <li><a href="https://pyodide.org" target="_blank" rel="noopener">Pyodide</a>, which runs the randomizer in your browser (MPL-2.0)</li>
         <li><a href="https://github.com/indygreg/python-zstandard" target="_blank" rel="noopener">python-zstandard</a> (BSD-3-Clause), <a href="https://github.com/hajimes/mmh3" target="_blank" rel="noopener">mmh3</a> (MIT), <a href="https://numpy.org" target="_blank" rel="noopener">NumPy</a> (BSD-3-Clause) and <a href="https://python-pillow.org" target="_blank" rel="noopener">Pillow</a> (MIT-CMU)</li>
-        <li>TeX Gyre Pagella font by GUST e-foundry (GUST Font License)</li>
+        <li>TeX Gyre Pagella by GUST e-foundry, for the title screen text (GUST Font License)</li>
         <li>File format research shared publicly by the Tears of the Kingdom modding community</li>
       </ul>
-      <h3>Source code</h3>
-      <p>The full source code is public on <a href="https://github.com/IcePeten/ootrando" target="_blank" rel="noopener">GitHub</a> under the GPL-3.0-or-later license. Corrections to the logic are especially welcome.</p>
     </section>
   </div>
 </main>
+
+<footer>
+  <p>Made by a fan. Not affiliated with, endorsed or sponsored by Nintendo. You need your own copy of the game.</p>
+  <p>The Legend of Zelda and Ocarina of Time are trademarks of Nintendo. No game files are hosted or shared by this site.</p>
+</footer>
+
+</div>
 
 <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Screenshot viewer">
   <button class="lb-close" id="lb-close" type="button" aria-label="Close">&times;</button>
@@ -196,31 +195,26 @@
 <div class="modal" id="feedback" hidden>
   <form class="modal-card" id="feedback-form" novalidate>
     <button class="modal-close" type="button" id="close-feedback" aria-label="Close">&times;</button>
-    <div class="step">Contact</div>
-    <h2>Feedback &amp; Ideas</h2>
-    <p class="note">Found a bug, have a feature request, or just want to say hi? Messages go straight to the developer.</p>
+    <h2>Send me a message</h2>
+    <p class="note">Bugs, ideas, a seed that broke, or just hello. It goes straight to my inbox.</p>
     <div class="kinds" id="fb-kinds">
       <label><input type="radio" name="kind" value="Feedback" checked>Feedback</label>
-      <label><input type="radio" name="kind" value="Feature Request">Feature Request</label>
-      <label><input type="radio" name="kind" value="Bug Report">Bug Report</label>
-      <label><input type="radio" name="kind" value="Logic Problem">Logic Problem</label>
+      <label><input type="radio" name="kind" value="Feature Request">Idea</label>
+      <label><input type="radio" name="kind" value="Bug Report">Bug</label>
+      <label><input type="radio" name="kind" value="Logic Problem">Logic problem</label>
     </div>
     <div class="fb-row">
-      <input type="text" name="name" maxlength="100" placeholder="Your name (optional)">
-      <input type="text" name="email" maxlength="200" placeholder="Your email, if you'd like a reply">
+      <input type="text" name="name" maxlength="100" placeholder="Name (optional)">
+      <input type="text" name="email" maxlength="200" placeholder="Email, if you want a reply">
     </div>
-    <textarea name="message" maxlength="5000" rows="6" placeholder="What's on your mind?"></textarea>
+    <textarea name="message" maxlength="5000" rows="6" placeholder="What happened, or what would you like to see?"></textarea>
     <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <label class="attach"><input type="checkbox" id="fb-attach" checked>Include my current seed and settings</label>
-    <button class="primary" type="submit" id="fb-send">Send Message</button>
+    <label class="attach"><input type="checkbox" id="fb-attach" checked>Include my seed and settings</label>
+    <button class="primary" type="submit" id="fb-send">Send</button>
     <div class="status" id="fb-status"></div>
   </form>
 </div>
 
-<footer>
-  <p>Fan-made and not affiliated with, endorsed or sponsored by Nintendo. You must own the game.</p>
-  <p>The Legend of Zelda and Ocarina of Time are trademarks of Nintendo. No game files are hosted or distributed by this site.</p>
-</footer>
 <script src="app.js"></script>
 </body>
 </html>

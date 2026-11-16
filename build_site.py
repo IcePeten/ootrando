@@ -21,12 +21,6 @@ ENGINE_DATA = ["data/isget.json", "data/locations.json", "data/logic_data.json",
                "fonts/texgyrepagella-bold.otf", "fonts/GUST-FONT-LICENSE.txt"]
 FOLDER_DIRS = ["Event/EventFlow", "Pack/Actor"]
 
-WORDMARK = """<div class="wordmark" role="img" aria-label="Ocarina of Time Randomizer">
-    <span class="top">Ocarina of Time</span>
-    <span class="main">Randomizer</span>
-    <span class="rule"></span>
-  </div>"""
-
 CSP = ("default-src 'self'; "
        "script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' 'unsafe-eval'; "
        "connect-src 'self' https://cdn.jsdelivr.net blob: data:; "
@@ -109,11 +103,6 @@ def stamp(data):
 
 def index_html(versions):
     html = (WEB / "index.html").read_text(encoding="utf-8")
-    html = re.sub(r'<img class="logo"[^>]*>', WORDMARK, html, count=1)
-    html = html.replace("<title>Ocarina of Time Randomizer</title>",
-                        "<title>Ocarina of Time Randomizer for Nintendo Switch 2</title>\n"
-                        '<meta name="description" content="Make an item randomizer mod for The Legend of Zelda: '
-                        'Ocarina of Time on Nintendo Switch 2. Runs in your browser from your own copy of the game.">')
     html = html.replace('href="style.css"', f'href="style.css?v={versions["style.css"]}"')
     html = html.replace('<script src="app.js"></script>',
                         f'<script src="engine.js?v={versions["engine.js"]}"></script>\n'
