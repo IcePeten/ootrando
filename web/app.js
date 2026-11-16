@@ -365,6 +365,21 @@ function updateString() {
   for (const k of liveKeys()) out[k] = state.options[k];
   out.cosmetics = state.options.cosmetics;
   $("settings-string").value = btoa(unescape(encodeURIComponent(JSON.stringify(out)))).replace(/=+$/, "");
+  markPreset();
+}
+
+function presetMatches(values) {
+  const want = Object.assign({}, state.defaults, values || {});
+  return liveKeys().every(k => JSON.stringify(state.options[k]) === JSON.stringify(want[k]));
+}
+
+function markPreset() {
+  const buttons = [...$("presets").children];
+  const match = PRESETS.findIndex(p => presetMatches(p[2]));
+  buttons.forEach((b, i) => {
+    b.classList.toggle("on", i === match);
+    b.setAttribute("aria-pressed", i === match ? "true" : "false");
+  });
 }
 
 function loadString() {
