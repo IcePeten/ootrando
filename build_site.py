@@ -16,7 +16,7 @@ OUT = ROOT.parent / "ootrando-site"
 ENGINE_MODULES = ["game", "nup", "sarc", "byml", "msbt", "bntx", "texcodec", "cosmetics", "hints", "logic", "logo",
                   "maps", "mod", "npcs", "pickups", "places", "randomizer", "songs", "starting", "options",
                   "webentry", "folder", "formats", "keys", "skips", "models", "bfres"]
-ENGINE_DATA = ["data/isget.json", "data/locations.json", "data/places.json", "data/landmarks.json",
+ENGINE_DATA = ["data/isget.json", "data/locations.json", "data/logic_data.json", "data/places.json", "data/landmarks.json",
                "data/romfs_needed.json",
                "fonts/texgyrepagella-bold.otf", "fonts/GUST-FONT-LICENSE.txt"]
 FOLDER_DIRS = ["Event/EventFlow", "Pack/Actor"]

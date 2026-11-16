@@ -18,7 +18,7 @@ ITEMS = {
     "hover_boots": {"label": "Hover Boots", "pouch": {"Armor_Adult_HoverBoot": 1}, "logic": ["HoverBoots"]},
     "goron_tunic": {"label": "Goron Tunic", "pouch": {"Armor_Adult_Goron": 1}, "logic": ["GoronTunic"]},
     "zora_tunic": {"label": "Zora Tunic", "pouch": {"Armor_Adult_Zora": 1}, "logic": ["ZoraTunic"]},
-    "silver_scale": {"label": "Silver Scale", "pouch": {"Item_Scale_Silver": 1}, "logic": []},
+    "silver_scale": {"label": "Silver Scale", "pouch": {"Item_Scale_Silver": 1}, "logic": ["SilverScale"]},
     "wallet": {"label": "Adult's Wallet", "pouch": {"Item_Wallet_Medium": 1}, "logic": []},
 }
 SKIP_ZELDA = {"pouch": {"Item_ZeldaLetter": 1}, "songs": ["Item_Melody_ZeldaLullaby"],

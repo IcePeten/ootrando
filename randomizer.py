@@ -102,6 +102,8 @@ NAMES = {
     "HoverBoots": "Hover Boots", "SilverGauntlets": "Silver Gauntlets", "GoldGauntlets": "Golden Gauntlets",
     "MirrorShield": "Mirror Shield", "GoronTunic": "Goron Tunic", "ZoraTunic": "Zora Tunic",
     "GoronBracelet": "Goron's Bracelet", "FairyOcarina": "Fairy Ocarina", "GerudoCard": "Gerudo Membership Card",
+    "DinsFire": "Din's Fire", "FireArrows": "Fire Arrows", "SilverScale": "Silver Scale", "GoldScale": "Golden Scale",
+    "BottleItem": "Bottle", "Magic": "Magic Meter", "LightArrows": "Light Arrows",
 }
 
 @dataclass
@@ -374,7 +376,8 @@ def generate(settings, attempts=200):
     small_keys, boss_keys = keys.rules(key_items)
     for _ in range(attempts):
         song_map = songs.shuffle(rng) if settings.shuffle_songs else {}
-        logic.configure(songs.event_rules(song_map), settings.bridge, settings.trials, small_keys, boss_keys)
+        trials = [t for t in TRIALS if t not in cleared_trials(settings)]
+        logic.configure(songs.event_rules(song_map), settings.bridge, trials, small_keys, boss_keys)
         locations = build_locations(settings)
         place_dungeon_items(rng, locations)
         pool = [l.data["item"] for l in locations if not l.fixed and l.data["item"] not in DUNGEON_ITEMS

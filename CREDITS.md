@@ -2,7 +2,7 @@
 
 ## Inspiration
 
-- **[Ocarina of Time Randomizer](https://ootrandomizer.com)** ([source](https://github.com/OoTRandomizer/OoT-Randomizer)) for the Nintendo 64 game, and its contributors. The concept, and many options here, follow ideas they created or popularized: keysanity, song shuffle, Gossip Stone hints, open forest/gate/door/fountain settings, Gold Skulltula and scrub shuffle, traps, and logic built around "reachable without the item". No code, logic files or text from that project are included here. This project's logic was written separately from knowledge of the original game, which is why it still needs checking against the remake.
+- **[Ocarina of Time Randomizer](https://ootrandomizer.com)** ([source](https://github.com/OoTRandomizer/OoT-Randomizer)) for the Nintendo 64 game, and its contributors. The concept, and many options here, follow ideas they created or popularized: keysanity, song shuffle, Gossip Stone hints, open forest/gate/door/fountain settings, Gold Skulltula and scrub shuffle, traps, and logic built around "reachable without the item". No code, logic files or text from that project are included here. This project's logic was written separately, from knowledge of the original game, and checked against the remake's level files.
 - **ZeldaSpeedRuns** and the wider Zelda speedrun and randomizer communities, for years of routing knowledge and entertainment.
 - The **"Lank" and "Lonk/Lunk"** body swaps are a nod to the long-running community joke.
 

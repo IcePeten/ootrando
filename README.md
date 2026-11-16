@@ -5,7 +5,7 @@ A fan-made item randomizer for *The Legend of Zelda: Ocarina of Time* on Nintend
 ## Please read first
 
 - **Built with AI assistance.** Nearly all of this code was written with an AI coding assistant. The project owner directed the work and tested every change by playing it in the Lichii emulator. Expect rough edges.
-- **Experimental logic.** The rules for what each area needs (`logic.py`) come from how the *original* game works. They have not been fully checked against the remake, which changed some areas (parts of Death Mountain, the Hyrule Castle grounds, and some Heart Piece and Gold Skulltula spots). A seed can occasionally expect a route that no longer exists. Reports and corrections are very welcome.
+- **Logic is new and still being play-tested.** The rules (`logic.py`) track child and adult Link separately, area by area, and are matched against the remake's own level data: each grotto's cover (Song of Storms, bombable, heavy rock, hammer rock) and what is inside it, each Gold Skulltula's type (bean patch, crate, tree or wall), dungeon rooms, and the remake's moved spots, such as Ruto's Letter at the bottom of Lake Hylia. Every seed is simulated to Ganon before it is accepted. It has not yet been confirmed by full playthroughs, so if a seed expects something you can't reach, please report it.
 - **Not affiliated** with Nintendo, the N64 Ocarina of Time Randomizer project, or ZeldaSpeedRuns. See [CREDITS.md](CREDITS.md).
 
 ## What it does
