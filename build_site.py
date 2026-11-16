@@ -22,8 +22,8 @@ ENGINE_DATA = ["data/isget.json", "data/locations.json", "data/logic_data.json",
 FOLDER_DIRS = ["Event/EventFlow", "Pack/Actor"]
 
 CSP = ("default-src 'self'; "
-       "script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' 'unsafe-eval'; "
-       "connect-src 'self' https://cdn.jsdelivr.net blob: data:; "
+       "script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com 'wasm-unsafe-eval' 'unsafe-eval'; "
+       "connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com blob: data:; "
        "img-src 'self' data: blob:; "
        "style-src 'self' 'unsafe-inline'; "
        "font-src 'self'; "

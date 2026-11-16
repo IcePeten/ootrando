@@ -34,7 +34,11 @@ window.addEventListener("error", e => {
   reportError("page", e.error || e.message, { source: `${e.filename || ""}:${e.lineno || 0}:${e.colno || 0}` });
 });
 window.addEventListener("unhandledrejection", e => reportError("promise", e.reason));
-document.addEventListener("securitypolicyviolation", e => reportError("blocked", `Blocked ${e.blockedURI || "inline"} by ${e.violatedDirective}`, { source: `${e.sourceFile || ""}:${e.lineNumber || 0}` }));
+const OWN_SOURCES = [location.origin, "https://cdn.jsdelivr.net", "blob:", "data:"];
+document.addEventListener("securitypolicyviolation", e => {
+  if (!OWN_SOURCES.some(s => (e.blockedURI || "").startsWith(s))) return;
+  reportError("blocked", `Blocked ${e.blockedURI} by ${e.violatedDirective}`, { source: `${e.sourceFile || ""}:${e.lineNumber || 0}` });
+});
 
 const api = window.OOT_ENGINE || {
   hosted: false,
