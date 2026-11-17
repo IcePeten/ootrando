@@ -33,6 +33,22 @@
 
 <main>
   <div class="view" id="view-generate">
+    <section class="playthrough">
+      <video controls preload="none" playsinline poster="playthrough-poster.jpg" width="1280" height="716">
+        <source src="playthrough.mp4" type="video/mp4">
+      </video>
+      <h2>Two minutes of a real seed</h2>
+      <p>This is a proof of concept, recorded on my laptop. The frame rate dips are my laptop struggling with the emulator, not the randomizer. A stronger PC runs it much more smoothly.</p>
+      <p>Things to watch for: items turning up where they don't belong, like the Goron's Bracelet sitting in a Kokiri Forest chest; grass, pots and rocks that can hold anything; trap enemies hiding among the items; and map markers showing checks you haven't found yet, which is still a work in progress. Oh, and that's Lunk in a black tunic.</p>
+      <details class="seed-used">
+        <summary>Seed and settings used in this video</summary>
+        <p><b>Seed:</b> <code>145878048</code></p>
+        <p><b>Settings string:</b></p>
+        <code class="long">eyJsb2dpYyI6InJlbGF4ZWQiLCJvcGVuX2ZvcmVzdCI6Im9wZW4iLCJrYWthcmlrb19nYXRlIjoiY2xvc2VkIiwiZG9vcl9vZl90aW1lIjoiY2xvc2VkIiwiem9yYV9mb3VudGFpbiI6ImNsb3NlZCIsImdlcnVkb19mb3J0cmVzcyI6InZhbmlsbGEiLCJicmlkZ2UiOiJ2YW5pbGxhIiwiZ2Fub25fYm9zc19rZXkiOiJ2YW5pbGxhIiwidHJpYWxzIjo2LCJzaHVmZmxlX2NoZXN0cyI6dHJ1ZSwiY3V0c2NlbmVfY2hlc3RzIjp0cnVlLCJzaHVmZmxlX25wY3MiOnRydWUsInNodWZmbGVfc2hvcHMiOnRydWUsInNodWZmbGVfZmxvb3IiOnRydWUsInNodWZmbGVfcnVwZWVzIjp0cnVlLCJzaHVmZmxlX2hlYXJ0cyI6dHJ1ZSwic2h1ZmZsZV9wb3RzIjp0cnVlLCJzaHVmZmxlX2NyYXRlcyI6dHJ1ZSwic2h1ZmZsZV9iZWVoaXZlcyI6dHJ1ZSwic2h1ZmZsZV9ncmFzcyI6dHJ1ZSwic2h1ZmZsZV9yb2NrcyI6dHJ1ZSwic21hbGxfYW55dGhpbmciOnRydWUsInNodWZmbGVfbWFwc19jb21wYXNzZXMiOnRydWUsInNodWZmbGVfc29uZ3MiOnRydWUsInRva2VucyI6ImFsbCIsInNjcnVicyI6dHJ1ZSwic2h1ZmZsZV9nZXJ1ZG9fY2FyZCI6dHJ1ZSwic2h1ZmZsZV9mcm9ncyI6dHJ1ZSwic2h1ZmZsZV9taW5pZ2FtZXMiOnRydWUsInNodWZmbGVfc2lkZXF1ZXN0cyI6dHJ1ZSwic2h1ZmZsZV9za3VsbHR1bGFfcmV3YXJkcyI6dHJ1ZSwic2h1ZmZsZV9ncmVhdF9mYWlyaWVzIjp0cnVlLCJzaHVmZmxlX3N0b3J5X2dpZnRzIjp0cnVlLCJzaHVmZmxlX3RyYWRlX3Jld2FyZHMiOnRydWUsInNtYWxsX2tleXMiOiJhbnl3aGVyZSIsImJvc3Nfa2V5cyI6ImFueXdoZXJlIiwidHJhcHMiOiJzb21lIiwiY29sb3JfYnJlYWthYmxlcyI6dHJ1ZSwiaXRlbV9wb29sIjoiYmFsYW5jZWQiLCJzdGFydGluZ19pdGVtcyI6W10sInNraXBfaW50cm8iOnRydWUsInNraXBfYXJlYV9pbnRyb3MiOnRydWUsInNraXBfemVsZGEiOmZhbHNlLCJmcmVlX3NjYXJlY3JvdyI6ZmFsc2UsImNoZXN0X3NpemUiOiJtYXRjaCIsIm1hc2tfcXVlc3QiOmZhbHNlLCJtYXBfbWFya2VycyI6dHJ1ZSwiaGludHMiOiJiYWxhbmNlZCIsImNvc21ldGljcyI6eyJrb2tpcmlfdHVuaWMiOiJCbGFjayIsImtva2lyaV91bmRlciI6IldoaXRlIiwiZ29yb25fdHVuaWMiOiJHb2xkIiwiem9yYV90dW5pYyI6IlZpdmlkIEN5YW4iLCJzaWx2ZXJfZ2F1bnRsZXRzIjoiTGltZSIsImdvbGRlbl9nYXVudGxldHMiOiJTa3kgQmx1ZSIsImNoaWxkX21vZGVsIjoiTHVuayAoU3RvdXQgTGluaykiLCJhZHVsdF9tb2RlbCI6IkxhbmsgKFN0cmV0Y2hlZCBMaW5rKSJ9fQ</code>
+        <button type="button" class="ghost" id="use-video-seed">Use this seed and these settings</button>
+      </details>
+    </section>
+
     <section class="showcase">
       <div class="shots">
         <figure class="shot">

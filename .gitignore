@@ -12,3 +12,4 @@ web_build/node_modules/
 web_build/node_mod.zip
 web_build/*.whl
 ../ootrando-site/
+web/playthrough*

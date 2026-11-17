@@ -59,6 +59,7 @@ ServerSignature Off
   AddType application/wasm .wasm
   AddType image/svg+xml .svg
   AddType image/webp .webp
+  AddType video/mp4 .mp4
 </IfModule>
 
 <IfModule mod_deflate.c>
@@ -75,7 +76,7 @@ ServerSignature Off
 {hsts}  <FilesMatch "\\.(html|zip)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  <FilesMatch "\\.(js|css|otf|webp)$">
+  <FilesMatch "\\.(js|css|otf|webp|jpg|mp4)$">
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
 </IfModule>
@@ -132,7 +133,7 @@ def main(force_https=False):
     }
     needed = json.loads((ROOT / "data" / "romfs_needed.json").read_text())
     files["romfs-files.json"] = json.dumps({"files": needed["files"], "dirs": FOLDER_DIRS}).encode()
-    for shot in sorted(WEB.glob("shot-*.webp")):
+    for shot in sorted(WEB.glob("shot-*.webp")) + sorted(WEB.glob("playthrough*")):
         files[shot.name] = shot.read_bytes()
     versions = {k: stamp(v) for k, v in files.items()}
     files["worker.js"] = files["worker.js"].replace(

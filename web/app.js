@@ -392,6 +392,7 @@ function loadString() {
     for (const k of liveKeys()) if (k in data) state.options[k] = data[k];
     if (data.cosmetics) state.options.cosmetics = data.cosmetics;
     renderSettings();
+    markPreset();
     setStatus("Settings loaded.");
   } catch (e) {
     reportError("settings-string", e, { input: $("settings-string").value.slice(0, 2000) });
@@ -773,6 +774,13 @@ async function init() {
   $("reroll").onclick = async () => { $("seed").value = await api.randomSeed(); };
   $("copy-string").onclick = () => { navigator.clipboard.writeText($("settings-string").value); setStatus("Settings string copied."); };
   $("load-string").onclick = loadString;
+  $("use-video-seed").onclick = () => {
+    $("seed").value = "145878048";
+    $("settings-string").value = document.querySelector(".seed-used code.long").textContent.trim();
+    loadString();
+    setStatus("Loaded the seed and settings from the video.");
+    $("seed").scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   $("generate").onclick = generate;
   updateGenerate();
   setStatus(api.hosted ? "Ready. Choose your game file to begin." : "");
